@@ -1,0 +1,28 @@
+.pretext-enhanced {
+  position: relative;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+
+  * {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+  }
+
+  a {
+    text-decoration-color: transparent !important;
+  }
+
+  ::selection {
+    background: var(--accent);
+  }
+}
+
+.pretext-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
