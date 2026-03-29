@@ -70,10 +70,16 @@
                 {% if hero_path is not starting_with("/") %}
                     {% set hero_path = page.path ~ page.extra.hero_image %}
                 {% endif %}
-                {% set hero = resize_image(path=hero_path, width=1440, op="fit_width", format="webp", quality=85) %}
-                <img src="{{ hero.url }}"
+                {% set hero_lg = resize_image(path=hero_path, width=1440, op="fit_width", format="webp", quality=85) %}
+                {% set hero_md = resize_image(path=hero_path, width=768, op="fit_width", format="webp", quality=85) %}
+                {% set hero_sm = resize_image(path=hero_path, width=480, op="fit_width", format="webp", quality=80) %}
+                <img src="{{ hero_lg.url }}"
+                     srcset="{{ hero_sm.url }} 480w, {{ hero_md.url }} 768w, {{ hero_lg.url }} 1440w"
+                     sizes="100vw"
                      alt="{{ page.extra.hero_image_alt | default(value=page.title) }}"
-                     class="hero-image" />
+                     class="hero-image"
+                     fetchpriority="high"
+                     decoding="async" />
             {% endif %}
         </div>
     {% endif %}

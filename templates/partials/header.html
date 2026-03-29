@@ -67,7 +67,11 @@
               href="{{ get_url(path=config.extra.favicon) }}" />
     {% endif %}
 
-    {# Fonts are included via main.css through SCSS imports #}
+    {# Preload critical above-the-fold fonts #}
+    <link rel="preload" href="{{ get_url(path='fonts/zed-fonts/ZedTextL-Regular.woff2') }}"
+          as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="{{ get_url(path='fonts/Fraunces/Fraunces-Variable.woff2') }}"
+          as="font" type="font/woff2" crossorigin />
 
     {# Syntax theme #}
     {% if config.markdown.highlight_code and config.markdown.highlight_theme == "css" %}
