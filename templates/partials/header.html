@@ -162,21 +162,21 @@
     {% set theme = config.extra.theme | default(value="toggle") %}
     {% if theme == "dark" %}
         <link rel="stylesheet" type="text/css"
-              href="{{ get_url(path='theme/dark.css') }}" />
+              href="{{ get_url(path='theme/dark.css', cachebust=true) }}" />
     {% elif theme == "light" %}
         <link rel="stylesheet" type="text/css"
-              href="{{ get_url(path='theme/light.css') }}" />
+              href="{{ get_url(path='theme/light.css', cachebust=true) }}" />
     {% elif theme == "auto" %}
         <link rel="stylesheet" type="text/css"
-              href="{{ get_url(path='theme/light.css') }}" />
+              href="{{ get_url(path='theme/light.css', cachebust=true) }}" />
         <link rel="stylesheet" type="text/css"
-              href="{{ get_url(path='theme/dark.css') }}"
+              href="{{ get_url(path='theme/dark.css', cachebust=true) }}"
               media="(prefers-color-scheme: dark)" />
     {% elif theme == "toggle" %}
         <link rel="stylesheet" type="text/css"
-              href="{{ get_url(path='theme/light.css') }}" />
+              href="{{ get_url(path='theme/light.css', cachebust=true) }}" />
         <link id="darkModeStyle" rel="stylesheet" type="text/css"
-              href="{{ get_url(path='theme/dark.css') }}" />
+              href="{{ get_url(path='theme/dark.css', cachebust=true) }}" />
     {% endif %}
 
     {% if theme == "auto" or theme == "toggle" %}
@@ -197,7 +197,7 @@
     {% endif %}
 
     <link rel="stylesheet" type="text/css" media="screen"
-          href="{{ get_url(path='main.css') }}" />
+          href="{{ get_url(path='main.css', cachebust=true) }}" />
 
     {% if config.extra.stylesheets %}
         {% for stylesheet in config.extra.stylesheets %}
