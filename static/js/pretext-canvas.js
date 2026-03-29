@@ -26,43 +26,9 @@
   ].join(", ");
 
   const SKIP_TAGS = new Set([
-    "PRE",
-    "CODE",
-    "TABLE",
-    "THEAD",
-    "TBODY",
-    "TR",
-    "TD",
-    "TH",
-    "SCRIPT",
-    "STYLE",
-    "CANVAS",
-    "SVG",
-    "IMG",
-    "VIDEO",
-    "IFRAME",
-    "INPUT",
-    "TEXTAREA",
-    "SELECT",
-    "BUTTON",
-  ]);
-
-  const INLINE_TAGS = new Set([
-    "STRONG",
-    "B",
-    "EM",
-    "I",
-    "A",
-    "CODE",
-    "SPAN",
-    "MARK",
-    "SUB",
-    "SUP",
-    "SMALL",
-    "S",
-    "U",
-    "ABBR",
-    "TIME",
+    "PRE", "CODE", "TABLE", "THEAD", "TBODY", "TR", "TD", "TH",
+    "SCRIPT", "STYLE", "CANVAS", "SVG", "IMG", "VIDEO", "IFRAME",
+    "INPUT", "TEXTAREA", "SELECT", "BUTTON",
   ]);
 
   const REQUIRED_FONTS = ["Fraunces", "ZedTextFtl"];
@@ -76,7 +42,7 @@
   }
 
   function buildFontString(weight, style, size, family) {
-    let parts = [];
+    var parts = [];
     if (style && style !== "normal") parts.push(style);
     if (weight && weight !== "400") parts.push(weight);
     parts.push(size);
@@ -85,105 +51,81 @@
   }
 
   function shouldEnhance(el) {
-    // Skip elements with media children
     if (el.querySelector("img, video, iframe, canvas, svg")) return false;
-    // Skip elements inside code blocks
     if (el.closest("pre")) return false;
-    // Skip elements with very little text
-    const text = el.textContent || "";
+    var text = el.textContent || "";
     if (text.trim().length < 3) return false;
-    // Skip elements already enhanced
     if (el.classList.contains("pretext-enhanced")) return false;
     return true;
   }
 
   // --- Segment Extraction ---
   // Walks the DOM tree of an element and extracts styled text segments.
+  // IMPORTANT: Must be called BEFORE adding pretext-enhanced class,
+  // otherwise getComputedStyle returns transparent colors.
 
   function extractSegments(el) {
-    const segments = [];
-    const computedStyle = getComputedStyle(el);
-    const baseFont = {
+    var segments = [];
+    var computedStyle = getComputedStyle(el);
+    var baseFont = {
       family: computedStyle.fontFamily,
       size: computedStyle.fontSize,
       weight: computedStyle.fontWeight,
       style: computedStyle.fontStyle,
-      letterSpacing: computedStyle.letterSpacing,
     };
 
     function walkNode(node, inheritedFont, inheritedColor, linkHref) {
       if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent;
+        var text = node.textContent;
         if (!text || text.length === 0) return;
-
         segments.push({
           text: text,
-          font: buildFontString(
-            inheritedFont.weight,
-            inheritedFont.style,
-            inheritedFont.size,
-            inheritedFont.family
-          ),
+          font: buildFontString(inheritedFont.weight, inheritedFont.style, inheritedFont.size, inheritedFont.family),
           color: inheritedColor,
           href: linkHref,
           isCode: false,
-          letterSpacing: inheritedFont.letterSpacing,
         });
         return;
       }
 
       if (node.nodeType !== Node.ELEMENT_NODE) return;
+      var tag = node.tagName;
 
-      const tag = node.tagName;
-
-      // Handle line breaks
       if (tag === "BR") {
         segments.push({ type: "break" });
         return;
       }
 
-      // Skip non-inline elements that shouldn't be traversed
       if (SKIP_TAGS.has(tag)) return;
 
-      const nodeStyle = getComputedStyle(node);
-      const nodeFont = {
+      var nodeStyle = getComputedStyle(node);
+      var nodeFont = {
         family: nodeStyle.fontFamily,
         size: nodeStyle.fontSize,
         weight: nodeStyle.fontWeight,
         style: nodeStyle.fontStyle,
-        letterSpacing: nodeStyle.letterSpacing,
       };
-      const nodeColor = nodeStyle.color;
-      const nodeHref =
-        tag === "A" ? node.getAttribute("href") : linkHref;
-      const isCode = tag === "CODE";
+      var nodeColor = nodeStyle.color;
+      var nodeHref = tag === "A" ? node.getAttribute("href") : linkHref;
+      var isCode = tag === "CODE";
 
-      for (let child = node.firstChild; child; child = child.nextSibling) {
-        if (isCode) {
-          // For inline code, extract as a single code segment
-          if (child.nodeType === Node.TEXT_NODE) {
-            segments.push({
-              text: child.textContent,
-              font: buildFontString(
-                nodeFont.weight,
-                nodeFont.style,
-                nodeFont.size,
-                nodeFont.family
-              ),
-              color: nodeColor,
-              href: nodeHref,
-              isCode: true,
-              letterSpacing: nodeFont.letterSpacing,
-            });
-          }
+      for (var child = node.firstChild; child; child = child.nextSibling) {
+        if (isCode && child.nodeType === Node.TEXT_NODE) {
+          segments.push({
+            text: child.textContent,
+            font: buildFontString(nodeFont.weight, nodeFont.style, nodeFont.size, nodeFont.family),
+            color: nodeColor,
+            href: nodeHref,
+            isCode: true,
+          });
         } else {
           walkNode(child, nodeFont, nodeColor, nodeHref);
         }
       }
     }
 
-    const baseColor = computedStyle.color;
-    for (let child = el.firstChild; child; child = child.nextSibling) {
+    var baseColor = computedStyle.color;
+    for (var child = el.firstChild; child; child = child.nextSibling) {
       walkNode(child, baseFont, baseColor, null);
     }
 
@@ -191,12 +133,13 @@
   }
 
   // --- Line Composition ---
-  // Composes lines from multiple segments, each with different fonts.
-  // Uses Pretext's layoutNextLine per-segment to handle word wrapping.
+  // Composes lines from multiple segments using Pretext's layoutNextLine.
+  // Each segment may have a different font, so we prepare each independently
+  // and consume them sequentially across shared lines.
 
-  function composeLines(segments, maxWidth, lineHeight) {
-    const lines = [];
-    let currentLine = { fragments: [], width: 0 };
+  function composeLines(segments, maxWidth) {
+    var lines = [];
+    var currentLine = { fragments: [], width: 0 };
 
     function pushLine() {
       if (currentLine.fragments.length > 0) {
@@ -205,44 +148,43 @@
       currentLine = { fragments: [], width: 0 };
     }
 
-    for (let i = 0; i < segments.length; i++) {
-      const seg = segments[i];
+    for (var i = 0; i < segments.length; i++) {
+      var seg = segments[i];
 
-      // Handle forced line breaks
       if (seg.type === "break") {
         pushLine();
         continue;
       }
 
       // Prepare this segment's text with Pretext
-      let prepared;
+      var prepared;
       try {
         prepared = Pretext.prepareWithSegments(seg.text, seg.font);
       } catch (e) {
-        // Fallback: treat as a single fragment on current line
+        // Fallback: place entire text as one fragment
         currentLine.fragments.push({
-          text: seg.text,
-          x: currentLine.width,
-          font: seg.font,
-          color: seg.color,
-          href: seg.href,
-          isCode: seg.isCode,
-          width: 0, // unknown
+          text: seg.text, x: currentLine.width, font: seg.font,
+          color: seg.color, href: seg.href, isCode: seg.isCode, width: 0,
         });
         continue;
       }
 
-      let cursor = { segmentIndex: 0, graphemeIndex: 0 };
+      // Consume all lines from this segment
+      var cursor = { segmentIndex: 0, graphemeIndex: 0 };
+      var isFirstLineOfSegment = true;
 
       while (true) {
-        const remainingWidth = maxWidth - currentLine.width;
-        const line = Pretext.layoutNextLine(
-          prepared,
-          cursor,
-          remainingWidth
-        );
+        var availableWidth = isFirstLineOfSegment
+          ? (maxWidth - currentLine.width)
+          : maxWidth;
 
+        var line = Pretext.layoutNextLine(prepared, cursor, availableWidth);
         if (!line) break;
+
+        // If not the first line of segment, the previous line is full
+        if (!isFirstLineOfSegment) {
+          pushLine();
+        }
 
         currentLine.fragments.push({
           text: line.text,
@@ -254,61 +196,12 @@
           width: line.width,
         });
         currentLine.width += line.width;
-
         cursor = line.end;
-
-        // Check if there's more text in this segment
-        // If layoutNextLine returned text and the cursor hasn't reached the end,
-        // it means a line break occurred within this segment
-        const nextLine = Pretext.layoutNextLine(prepared, cursor, maxWidth);
-        if (nextLine) {
-          // There's more text — the previous line is complete
-          pushLine();
-
-          // Process this next line result
-          currentLine.fragments.push({
-            text: nextLine.text,
-            x: 0,
-            font: seg.font,
-            color: seg.color,
-            href: seg.href,
-            isCode: seg.isCode,
-            width: nextLine.width,
-          });
-          currentLine.width = nextLine.width;
-          cursor = nextLine.end;
-
-          // Continue consuming remaining text from this segment
-          while (true) {
-            const moreLine = Pretext.layoutNextLine(
-              prepared,
-              cursor,
-              maxWidth
-            );
-            if (!moreLine) break;
-
-            // Previous line done, start new
-            pushLine();
-            currentLine.fragments.push({
-              text: moreLine.text,
-              x: 0,
-              font: seg.font,
-              color: seg.color,
-              href: seg.href,
-              isCode: seg.isCode,
-              width: moreLine.width,
-            });
-            currentLine.width = moreLine.width;
-            cursor = moreLine.end;
-          }
-        }
-        break; // Done with this segment
+        isFirstLineOfSegment = false;
       }
     }
 
-    // Push the final line
     pushLine();
-
     return lines;
   }
 
@@ -325,14 +218,16 @@
     };
   }
 
-  function renderToCanvas(el, lines, lineHeight) {
-    const dpr = window.devicePixelRatio || 1;
-    const rect = el.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
+  function renderToCanvas(el, lines) {
+    var dpr = window.devicePixelRatio || 1;
+    var rect = el.getBoundingClientRect();
+    var width = rect.width;
+    var height = rect.height;
+
+    if (width <= 0 || height <= 0) return false;
 
     // Find existing canvas or create new one
-    let canvas = el.querySelector(".pretext-canvas");
+    var canvas = el.querySelector(".pretext-canvas");
     if (!canvas) {
       canvas = document.createElement("canvas");
       canvas.className = "pretext-canvas";
@@ -345,48 +240,42 @@
     canvas.style.width = width + "px";
     canvas.style.height = height + "px";
 
-    const ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return false;
     ctx.scale(dpr, dpr);
     ctx.textBaseline = "alphabetic";
 
-    const colors = readThemeColors();
+    var colors = readThemeColors();
+    var computedStyle = getComputedStyle(el);
+    var fontSize = parseFloat(computedStyle.fontSize);
+    var resolvedLineHeight = parseFloat(computedStyle.lineHeight);
+    var effectiveLineHeight = isNaN(resolvedLineHeight) ? fontSize * 1.5 : resolvedLineHeight;
+    var paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+    var paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
 
-    // Compute the resolved lineHeight in pixels
-    const computedStyle = getComputedStyle(el);
-    const resolvedLineHeight = parseFloat(computedStyle.lineHeight);
-    const fontSize = parseFloat(computedStyle.fontSize);
-    const effectiveLineHeight =
-      isNaN(resolvedLineHeight) ? fontSize * lineHeight : resolvedLineHeight;
+    // Baseline offset — approximate ascender position within the line box
+    var baselineOffset = fontSize * 0.78;
 
-    // Compute padding
-    const paddingTop = parseFloat(computedStyle.paddingTop) || 0;
-    const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0;
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      var y = paddingTop + i * effectiveLineHeight + baselineOffset;
 
-    // Baseline offset: roughly 80% of fontSize from top of line
-    const baselineRatio = 0.78;
+      // Don't draw below the element
+      if (y > height) break;
 
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      const y =
-        paddingTop + i * effectiveLineHeight + fontSize * baselineRatio;
+      for (var j = 0; j < line.fragments.length; j++) {
+        var frag = line.fragments[j];
+        var x = paddingLeft + frag.x;
 
-      for (const frag of line.fragments) {
-        const x = paddingLeft + frag.x;
-
-        // Draw code background
+        // Code background
         if (frag.isCode && colors.codeBg) {
-          const pad = 2;
           ctx.fillStyle = colors.codeBg;
           ctx.beginPath();
-          const bgX = x - pad;
-          const bgY = y - fontSize * baselineRatio - pad;
-          const bgW = frag.width + pad * 2;
-          const bgH = fontSize + pad * 2;
-          ctx.roundRect(bgX, bgY, bgW, bgH, 3);
+          var pad = 2;
+          ctx.roundRect(x - pad, y - baselineOffset - pad, frag.width + pad * 2, fontSize + pad * 2, 3);
           ctx.fill();
         }
 
-        // Set font and color
         ctx.font = frag.font;
 
         if (frag.href) {
@@ -397,72 +286,84 @@
           ctx.fillStyle = frag.color || colors.text1;
         }
 
-        // Apply letter-spacing by drawing character by character for
-        // elements with non-default letter-spacing
         ctx.fillText(frag.text, x, y);
 
-        // Draw link underline
+        // Link underline
         if (frag.href) {
-          const underlineY = y + fontSize * 0.18;
           ctx.fillStyle = colors.borderColor;
-          ctx.fillRect(x, underlineY, frag.width, 1);
+          ctx.fillRect(x, y + fontSize * 0.18, frag.width, 1);
         }
       }
     }
+
+    return true;
   }
 
   // --- Element Enhancement ---
 
+  var resizeObserver;
+
   function enhanceElement(el) {
     if (!shouldEnhance(el)) return;
 
-    const computedStyle = getComputedStyle(el);
-    const lineHeight = parseFloat(computedStyle.lineHeight) / parseFloat(computedStyle.fontSize);
-    const maxWidth = el.clientWidth -
-      (parseFloat(computedStyle.paddingLeft) || 0) -
-      (parseFloat(computedStyle.paddingRight) || 0);
+    var computedStyle = getComputedStyle(el);
+    var maxWidth = el.clientWidth
+      - (parseFloat(computedStyle.paddingLeft) || 0)
+      - (parseFloat(computedStyle.paddingRight) || 0);
 
     if (maxWidth <= 0) return;
 
-    // Extract segments from DOM
-    const segments = extractSegments(el);
+    // Extract segments BEFORE making text transparent
+    var segments = extractSegments(el);
     if (segments.length === 0) return;
 
     // Compose lines using Pretext measurement
-    const lines = composeLines(segments, maxWidth, lineHeight);
+    var lines = composeLines(segments, maxWidth);
     if (lines.length === 0) return;
 
-    // Mark as enhanced (makes text transparent)
+    // Cache segment data (with original colors) for re-rendering
+    el._pretextSegments = segments;
+    el._pretextLastFontSize = computedStyle.fontSize;
+
+    // Mark as enhanced — this makes DOM text transparent via CSS
     el.classList.add("pretext-enhanced");
 
-    // Cache data for resize/theme re-rendering
-    el._pretextData = { segments, lineHeight, maxWidth };
+    // Render to canvas — if it fails, revert
+    var ok = renderToCanvas(el, lines);
+    if (!ok) {
+      el.classList.remove("pretext-enhanced");
+      var c = el.querySelector(".pretext-canvas");
+      if (c) c.remove();
+      return;
+    }
 
-    // Render to canvas
-    renderToCanvas(el, lines, lineHeight);
+    if (resizeObserver) resizeObserver.observe(el);
   }
 
   function rerenderElement(el) {
-    const data = el._pretextData;
-    if (!data) return;
+    var segments = el._pretextSegments;
+    if (!segments) return;
 
-    const computedStyle = getComputedStyle(el);
-    const maxWidth = el.clientWidth -
-      (parseFloat(computedStyle.paddingLeft) || 0) -
-      (parseFloat(computedStyle.paddingRight) || 0);
+    var computedStyle = getComputedStyle(el);
+    var maxWidth = el.clientWidth
+      - (parseFloat(computedStyle.paddingLeft) || 0)
+      - (parseFloat(computedStyle.paddingRight) || 0);
 
     if (maxWidth <= 0) return;
 
-    // Re-extract segments if font size changed (fluid clamp values)
-    const currentFontSize = computedStyle.fontSize;
-    if (data.lastFontSize && data.lastFontSize !== currentFontSize) {
-      data.segments = extractSegments(el);
+    // If font size changed (fluid clamp), we need to re-extract segments.
+    // Temporarily remove pretext-enhanced class to get real colors.
+    var currentFontSize = computedStyle.fontSize;
+    if (el._pretextLastFontSize !== currentFontSize) {
+      el.classList.remove("pretext-enhanced");
+      segments = extractSegments(el);
+      el._pretextSegments = segments;
+      el._pretextLastFontSize = currentFontSize;
+      el.classList.add("pretext-enhanced");
     }
-    data.lastFontSize = currentFontSize;
 
-    const lineHeight = parseFloat(computedStyle.lineHeight) / parseFloat(computedStyle.fontSize);
-    const lines = composeLines(data.segments, maxWidth, lineHeight);
-    renderToCanvas(el, lines, lineHeight);
+    var lines = composeLines(segments, maxWidth);
+    renderToCanvas(el, lines);
   }
 
   function rerenderAll() {
@@ -472,57 +373,52 @@
   // --- Initialization ---
 
   function init() {
-    const targets = document.querySelectorAll(TARGET_SELECTORS);
-    const elements = Array.from(targets).filter(shouldEnhance);
-
+    var targets = document.querySelectorAll(TARGET_SELECTORS);
+    var elements = Array.from(targets).filter(shouldEnhance);
     if (elements.length === 0) return;
 
-    // Set up IntersectionObserver for lazy enhancement
-    const visibilityObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            if ("requestIdleCallback" in window) {
-              requestIdleCallback(() => enhanceElement(entry.target));
-            } else {
-              requestAnimationFrame(() => enhanceElement(entry.target));
-            }
-            visibilityObserver.unobserve(entry.target);
-          }
-        });
-      },
-      { rootMargin: "200% 0px" }
-    );
-
-    elements.forEach((el) => visibilityObserver.observe(el));
-
     // ResizeObserver for responsive re-rendering
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const el = entry.target;
+    resizeObserver = new ResizeObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var el = entries[i].target;
         if (!el._pretextRafPending) {
           el._pretextRafPending = true;
-          requestAnimationFrame(() => {
-            rerenderElement(el);
-            el._pretextRafPending = false;
-          });
+          requestAnimationFrame(function (target) {
+            return function () {
+              rerenderElement(target);
+              target._pretextRafPending = false;
+            };
+          }(el));
         }
       }
     });
 
-    // Observe enhanced elements as they appear
-    const originalEnhance = enhanceElement;
-    enhanceElement = function (el) {
-      originalEnhance(el);
-      if (el.classList.contains("pretext-enhanced")) {
-        resizeObserver.observe(el);
-      }
-    };
+    // IntersectionObserver for lazy enhancement
+    var visibilityObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            // Enhance immediately — don't defer, as that causes flash of invisible text
+            enhanceElement(entry.target);
+            visibilityObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: "100% 0px" }
+    );
+
+    elements.forEach(function (el) { visibilityObserver.observe(el); });
 
     // MutationObserver for theme changes (dark/light toggle)
-    const themeObserver = new MutationObserver((mutations) => {
-      for (const mutation of mutations) {
-        if (mutation.attributeName === "class") {
+    var themeObserver = new MutationObserver(function (mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        if (mutations[i].attributeName === "class") {
+          // Re-extract colors by temporarily removing class, re-extracting, re-rendering
+          document.querySelectorAll(".pretext-enhanced").forEach(function (el) {
+            el.classList.remove("pretext-enhanced");
+            el._pretextSegments = extractSegments(el);
+            el.classList.add("pretext-enhanced");
+          });
           requestAnimationFrame(rerenderAll);
           break;
         }
@@ -533,29 +429,20 @@
 
   // --- Entry Point ---
 
-  document.addEventListener("DOMContentLoaded", async () => {
-    // Ensure Pretext is available
+  document.addEventListener("DOMContentLoaded", async function () {
     if (typeof Pretext === "undefined" || !Pretext.prepareWithSegments) {
       console.warn("Pretext: library not loaded, skipping canvas enhancement");
       return;
     }
 
-    // Wait for web fonts to load
-    try {
-      await document.fonts.ready;
-    } catch (e) {
-      // fonts.ready not supported, proceed anyway
-    }
+    try { await document.fonts.ready; } catch (e) { /* proceed */ }
 
-    // Verify required fonts are available
-    const fontsLoaded = REQUIRED_FONTS.every((name) =>
-      document.fonts.check('16px "' + name + '"')
-    );
+    var fontsLoaded = REQUIRED_FONTS.every(function (name) {
+      return document.fonts.check('16px "' + name + '"');
+    });
 
     if (!fontsLoaded) {
-      console.warn(
-        "Pretext: required fonts not available, skipping canvas enhancement"
-      );
+      console.warn("Pretext: required fonts not available, skipping canvas enhancement");
       return;
     }
 
