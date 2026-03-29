@@ -16,12 +16,6 @@
   margin: 0 0 1.75rem;
 }
 
-// When a hero banner is present, the nav border is replaced by
-// the hero's full-bleed border-top (class set in page.html)
-.has-hero nav {
-  border-bottom: none;
-}
-
 .hero-banner {
   width: 100vw;
   margin-left: calc(50% - 50vw);
