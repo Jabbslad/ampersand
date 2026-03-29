@@ -180,7 +180,7 @@
     {% endif %}
 
     {% if theme == "auto" or theme == "toggle" %}
-        <script src="{{ get_url(path='js/themetoggle.js') }}"></script>
+        <script src="{{ get_url(path='js/themetoggle.js', cachebust=true) }}"></script>
         {% if theme == "auto" %}
             <script>
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {

@@ -1,7 +1,6 @@
-{% macro list_post(page) %}
+{% macro list_post(page, compact=false) %}
     <li class="list-item">
         <section>
-            {% set hide_read_more = false %}
             <div class="post-header">
                 <time>{{ page.date | date(format="%B %d, %Y") }}</time>
 
@@ -14,21 +13,28 @@
                         {% endif %}
                     </h1>
 
-                    <div class="meta">
-                        <div class="description">
-                            {% if page.description %}
-                                {{ page.description }}
-                            {% elif page.summary %}
-                                {{ page.summary | safe }}&hellip;
-                            {% else %}
-                                {% set hide_read_more = true %}
+                    {% if not compact %}
+                        {% set hide_read_more = false %}
+                        <div class="meta">
+                            <div class="description">
+                                {% if page.description %}
+                                    {{ page.description }}
+                                {% elif page.summary %}
+                                    {{ page.summary | safe }}&hellip;
+                                {% else %}
+                                    {% set hide_read_more = true %}
+                                {% endif %}
+                            </div>
+
+                            {% if not hide_read_more %}
+                                <a class="readmore" href="{{ page.permalink | safe }}">Read more ⟶</a>
                             {% endif %}
                         </div>
-
-                        {% if not hide_read_more %}
-                            <a class="readmore" href="{{ page.permalink | safe }}">Read more ⟶</a>
-                        {% endif %}
-                    </div>
+                    {% elif page.description %}
+                        <div class="meta">
+                            <div class="description">{{ page.description }}</div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
