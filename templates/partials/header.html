@@ -131,12 +131,6 @@
         <script defer src="{{ get_url(path='js/note.js') }}"></script>
     {% endif %}
 
-    {# Pretext Canvas Renderer #}
-    {% if config.extra.pretext_canvas | default(value=false) %}
-        <script defer src="{{ get_url(path='js/pretext.min.js', cachebust=true) }}"></script>
-        <script defer src="{{ get_url(path='js/pretext-canvas.js', cachebust=true) }}"></script>
-    {% endif %}
-
     {% if config.extra.mathjax | default(value=false) %}
         {% if config.extra.mathjax_dollar_inline_enable | default(value=false) %}
             <script>
