@@ -2,31 +2,80 @@
 
 {% macro home_page(section) %}
     {% set posts_section = get_section(path="posts/_index.md") %}
+    {% set all_posts = posts_section.pages %}
 
     <main class="home-main">
+        {# --- Hero --- #}
         <section class="home-hero">
-            <p class="section-kicker">Journal // [{{ config.title }}]</p>
-            <h1 class="home-title">{{ config.title }}</h1>
-
-            {% if config.description %}
-                <p class="home-subtitle">{{ config.description }}</p>
-            {% endif %}
+            <p class="section-kicker">{{ config.title }} // Journal</p>
+            <h1 class="home-title">Writing about code, architecture &amp; the craft of software.</h1>
         </section>
 
-        {% if section.content %}
-            <article>
-                <section class="body section-content home-section">
-                    {{ section.content | safe }}
-                </section>
-            </article>
+        {# --- Featured Post (latest) --- #}
+        {% if all_posts | length > 0 %}
+            {% set featured = all_posts | first %}
+            <section class="home-featured">
+                <p class="section-kicker">Latest</p>
+                <article class="featured-card">
+                    <div class="featured-card-body">
+                        <time>{{ featured.date | date(format="%B %d, %Y") }}</time>
+                        <h2 class="featured-card-title">
+                            <a href="{{ featured.permalink | safe }}">{{ featured.title }}</a>
+                        </h2>
+                        {% if featured.description %}
+                            <p class="featured-card-desc">{{ featured.description }}</p>
+                        {% elif featured.summary %}
+                            <p class="featured-card-desc">{{ featured.summary | safe | striptags | truncate(length=200) }}&hellip;</p>
+                        {% endif %}
+                        <div class="featured-card-meta">
+                            {% if featured.taxonomies.tags %}
+                                <div class="featured-card-tags">
+                                    {% for tag in featured.taxonomies.tags %}
+                                        <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="post-tag">{{ tag }}</a>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <a class="readmore" href="{{ featured.permalink | safe }}">Read article ⟶</a>
+                        </div>
+                    </div>
+                </article>
+            </section>
         {% endif %}
 
-        {% if posts_section.pages %}
+        {# --- Post List (remaining) --- #}
+        {% if all_posts | length > 1 %}
             <section class="home-section">
-                {{ post_macros::page_header(title="Recent Writing", kicker="Journal // [Latest]") }}
+                <p class="section-kicker">Archive</p>
 
                 <div class="post-list">
-                    {{ post_macros::list_posts(pages=posts_section.pages | slice(end=5)) }}
+                    <ul>
+                        {%- for page in all_posts | slice(start=1) %}
+                            <li class="list-item">
+                                <section>
+                                    <div class="post-header">
+                                        <time>{{ page.date | date(format="%B %d, %Y") }}</time>
+                                        <div>
+                                            <h1 class="title">
+                                                <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+                                                {% if page.draft %}
+                                                    <span class="draft-label">DRAFT</span>
+                                                {% endif %}
+                                            </h1>
+                                            {% if page.description %}
+                                                <div class="meta">
+                                                    <div class="description">{{ page.description }}</div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </section>
+                            </li>
+                        {% endfor -%}
+                    </ul>
+                </div>
+
+                <div class="home-view-all">
+                    <a href="{{ get_url(path='posts') }}" class="view-all-link">View all posts ⟶</a>
                 </div>
             </section>
         {% endif %}

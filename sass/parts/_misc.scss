@@ -11,6 +11,8 @@
   color: var(--text-2);
 }
 
+// --- Homepage ---
+
 .home-main {
   display: grid;
   gap: clamp(2.5rem, 5vw, 4rem);
@@ -19,19 +21,19 @@
 
 .home-hero {
   display: grid;
-  gap: 1rem;
+  gap: 1.25rem;
   padding-bottom: clamp(2rem, 4vw, 3rem);
   border-bottom: 1px solid var(--border-color);
 }
 
 .home-title {
   font-family: $font-display;
-  font-size: clamp(3.4rem, 1.9rem + 5vi, 7.5rem);
+  font-size: clamp(2.8rem, 1.6rem + 4vi, 6rem);
   font-weight: 500;
-  line-height: 0.88;
-  letter-spacing: -0.06em;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
   margin: 0;
-  max-width: 9ch;
+  max-width: 16ch;
   text-wrap: balance;
 }
 
@@ -51,6 +53,120 @@
 .home-main .post-list > ul {
   padding-top: 0;
 }
+
+// --- Featured Card ---
+
+.home-featured {
+  display: grid;
+  gap: 1rem;
+}
+
+.featured-card {
+  background: linear-gradient(180deg, var(--surface-1), var(--surface-0));
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 22px 44px -34px var(--shadow-color);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 28px 48px -30px var(--shadow-color);
+    border-color: var(--text-2);
+  }
+}
+
+.featured-card-body {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+
+  time {
+    font-family: $font-mono;
+    font-size: $type-xs;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-2);
+  }
+}
+
+.featured-card-title {
+  font-family: $font-display;
+  font-size: clamp(1.8rem, 1.3rem + 1.5vi, 3.2rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin: 0;
+  max-width: 20ch;
+
+  a {
+    text-decoration: none;
+    color: var(--text-0);
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+.featured-card-desc {
+  font-size: clamp(1.02rem, 0.95rem + 0.2vi, 1.2rem);
+  line-height: 1.5;
+  color: var(--text-1);
+  margin: 0;
+  max-width: 50ch;
+}
+
+.featured-card-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  padding-top: 0.5rem;
+}
+
+.featured-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+// --- View All ---
+
+.home-view-all {
+  padding-top: 0.5rem;
+}
+
+.view-all-link {
+  font-family: $font-mono;
+  font-size: $type-xs;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-0);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--surface-0);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+
+  &:hover {
+    background: var(--surface-1);
+    border-color: var(--text-2);
+  }
+}
+
+// --- Math ---
 
 .MathJax_Display,
 .MJXc-display,
