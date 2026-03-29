@@ -16,9 +16,9 @@
   margin: 0 0 1.75rem;
 }
 
-// When a hero banner follows the nav header, hide the nav's border
-// since the hero's full-bleed top border replaces it
-header.grid-full:has(+ .hero-banner) nav {
+// When a hero banner is present, the nav border is replaced by
+// the hero's full-bleed border-top (class set in page.html)
+.has-hero nav {
   border-bottom: none;
 }
 
