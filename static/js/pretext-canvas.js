@@ -444,10 +444,6 @@
   // --- Entry Point ---
 
   document.addEventListener("DOMContentLoaded", async function () {
-    // Skip on narrow viewports — canvas text rendering has measurement
-    // differences on mobile browsers that cause layout mismatches
-    if (window.innerWidth < 768) return;
-
     if (typeof Pretext === "undefined" || !Pretext.prepareWithSegments) {
       console.warn("Pretext: library not loaded, skipping canvas enhancement");
       return;
