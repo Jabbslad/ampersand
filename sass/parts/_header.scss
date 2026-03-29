@@ -1,18 +1,27 @@
 .page-header {
   font-family: $font-display;
-  font-size: $type-3xl;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin: 1rem 0 1.5rem;
+  font-size: clamp(2.6rem, 1.4rem + 3.6vi, 6.5rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  margin: 0;
   color: var(--text-0);
+  max-width: 12ch;
+  text-wrap: balance;
+}
+
+.page-header-block {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0 0 1.75rem;
 }
 
 .hero-banner {
   width: 100%;
-  height: clamp(12rem, 25vw, 22rem);
+  height: clamp(12rem, 24vw, 20rem);
   overflow: hidden;
   position: relative;
+  border-bottom: 1px solid var(--border-color);
 
   .hero-image {
     width: 100%;
@@ -23,7 +32,6 @@
     display: block;
   }
 
-  // Soft fade at the bottom edge into the background
   &::after {
     content: "";
     position: absolute;

@@ -1,8 +1,9 @@
 {% macro list_post(page) %}
     <li class="list-item">
         <section>
+            {% set hide_read_more = false %}
             <div class="post-header">
-                <time>{{ page.date | date(format="%Y-%m-%d") }}</time>
+                <time>{{ page.date | date(format="%B %d, %Y") }}</time>
 
                 <div>
                     <h1 class="title">
@@ -42,11 +43,15 @@
     </ul>
 {% endmacro list_posts %}
 
-{% macro page_header(title) %}
+{% macro page_header(title, kicker=false) %}
     {% if title %}
-        <div class="page-header">
-            {{ title }}
-        </div>
+        <header class="page-header-block">
+            {% if kicker %}
+                <p class="section-kicker">{{ kicker }}</p>
+            {% endif %}
+
+            <div class="page-header">{{ title }}</div>
+        </header>
     {% endif %}
 {% endmacro page_header %}
 

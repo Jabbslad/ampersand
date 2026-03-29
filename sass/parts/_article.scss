@@ -1,7 +1,8 @@
 .article-header {
-  padding-top: clamp(3rem, 6vw, 5rem);
-  padding-bottom: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 0;
+  padding-top: clamp(3rem, 7vw, 5.5rem);
+  padding-bottom: clamp(1.4rem, 3vw, 2.2rem);
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .article-date {
@@ -23,13 +24,13 @@
 
 .article-title {
   font-family: $font-display;
-  font-size: clamp(2.5rem, 2rem + 4vw, 5rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  font-size: clamp(3rem, 1.9rem + 4.4vi, 6.5rem);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
   color: var(--text-0);
-  margin: 0 0 1.5rem;
-  max-width: 20ch;
+  margin: 0 0 1.25rem;
+  max-width: 12ch;
   text-wrap: balance;
 }
 
@@ -48,11 +49,11 @@
 
 article {
   section.body {
-    max-width: 65ch;
-    font-size: $type-base;
-    line-height: 1.4;
+    max-width: 42rem;
+    font-size: clamp(1.02rem, 0.99rem + 0.12vi, 1.14rem);
+    line-height: 1.45;
     color: var(--text-1);
-    padding-top: 1rem;
+    padding-top: 1.5rem;
 
     h1, h2, h3, h4, h5, h6 {
       color: var(--text-0);
@@ -65,9 +66,10 @@ article {
 
     // First paragraph — larger, acts as a lede
     > p:first-of-type {
-      font-size: $type-lg;
-      line-height: 1.5;
+      font-size: clamp(1.28rem, 1.15rem + 0.45vi, 1.75rem);
+      line-height: 1.38;
       color: var(--text-0);
+      max-width: 36rem;
     }
 
     p {
@@ -87,7 +89,7 @@ article {
       font-style: italic;
       text-decoration: underline;
       text-decoration-color: var(--border-color);
-      text-underline-offset: 3px;
+      text-underline-offset: 0.18em;
       text-decoration-thickness: 1px;
       color: var(--text-0);
 
@@ -96,11 +98,18 @@ article {
         color: var(--text-0);
       }
     }
+
+    img,
+    video {
+      margin: 2rem 0;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 24px 48px -30px var(--shadow-color);
+    }
   }
 }
 
 .tldr {
-  background: var(--bg-1);
+  background: var(--surface-1);
   border-left: 3px solid var(--accent);
   padding: 1.25em 1.5em;
   margin: 2em 0;
@@ -118,8 +127,12 @@ article {
 .post-tag {
   font-family: $font-mono;
   font-size: $type-xs;
-  color: var(--accent);
+  color: var(--text-0);
   text-decoration: none;
+  background: var(--tag-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.3rem 0.55rem;
 
   &::before {
     content: "#";
@@ -132,7 +145,7 @@ article {
 
 .post-authors {
   font-size: $type-xs;
-  color: var(--accent);
+  color: var(--text-2);
   text-decoration: none;
 
   &::before {
@@ -145,5 +158,6 @@ article {
 }
 
 .section-content {
+  max-width: 44rem;
   margin-bottom: 2rem;
 }

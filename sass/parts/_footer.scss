@@ -1,40 +1,75 @@
 .site-footer {
   border-top: 1px solid var(--border-color);
-  padding: 2rem 0;
+  padding: clamp(2rem, 4vw, 3.5rem) 0;
   margin-top: auto;
+  background: linear-gradient(180deg, transparent, var(--surface-0));
 
   .footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    gap: 1.5rem 3rem;
+    align-items: start;
     max-width: $grid-max-width;
     margin: 0 auto;
     padding: 0 $grid-padding;
 
+    @media (min-width: $bp-lg) {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
     @media (max-width: $bp-md) {
-      flex-direction: column;
-      gap: 0.5rem;
-      text-align: center;
+      gap: 1.25rem;
     }
   }
 
-  .footer-left,
-  .footer-right {
+  .footer-brand {
+    max-width: 28rem;
+  }
+
+  .footer-title {
+    display: block;
+    font-family: $font-brand;
+    font-size: clamp(1.1rem, 1rem + 0.25vi, 1.35rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .footer-description {
+    margin: 0.6rem 0 0;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+
+  .footer-meta {
+    display: grid;
+    gap: 1rem;
+
+    @media (min-width: $bp-lg) {
+      justify-items: end;
+      text-align: right;
+    }
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1.1rem;
+  }
+
+  .footer-link,
+  .footer-copy {
     font-family: $font-mono;
     font-size: $type-xs;
     color: var(--text-2);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   a {
     color: var(--text-2);
-    text-decoration: underline;
-    text-decoration-color: var(--border-color);
-    text-underline-offset: 2px;
+    text-decoration: none;
 
     &:hover {
       color: var(--accent);
-      text-decoration-color: var(--accent);
     }
   }
 }

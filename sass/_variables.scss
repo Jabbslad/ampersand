@@ -1,20 +1,21 @@
 // Font stacks
 $font-display: "Fraunces", "Georgia", serif;
-$font-body: "Inter", "Helvetica Neue", "Arial", sans-serif;
+$font-body: "ZedTextFtl", "Inter", "Helvetica Neue", sans-serif;
+$font-brand: "ZedDisplayFtl", "ZedTextFtl", "Inter", sans-serif;
 $font-mono: "JetBrains Mono", "Fira Code", monospace;
 
 // Fluid type scale
-$type-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
-$type-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
-$type-base: clamp(1rem,     0.9rem  + 0.5vw,  1.125rem);
-$type-lg:   clamp(1.25rem,  1rem    + 1vw,    1.5rem);
-$type-xl:   clamp(1.5rem,   1.1rem  + 1.5vw,  2rem);
-$type-2xl:  clamp(2rem,     1.5rem  + 2vw,    3rem);
-$type-3xl:  clamp(2.5rem,   1.8rem  + 3vw,    4rem);
+$type-xs: clamp(0.72rem, 0.68rem + 0.12vi, 0.92rem);
+$type-sm: clamp(0.83rem, 0.76rem + 0.18vi, 1.04rem);
+$type-base: clamp(1rem, 0.93rem + 0.25vi, 1.18rem);
+$type-lg: clamp(1.22rem, 1.04rem + 0.55vi, 1.72rem);
+$type-xl: clamp(1.48rem, 1.12rem + 0.9vi, 2.4rem);
+$type-2xl: clamp(1.85rem, 1.2rem + 1.6vi, 4.1rem);
+$type-3xl: clamp(2.35rem, 1.25rem + 2.75vi, 6.8rem);
 
 // Grid
-$grid-max-width: 1440px;
-$grid-padding: clamp(1rem, 2vw, 3rem);
+$grid-max-width: 1680px;
+$grid-padding: clamp(1rem, 3vw, 4rem);
 
 // Breakpoints
 $bp-md: 768px;

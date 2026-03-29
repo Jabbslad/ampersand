@@ -2,6 +2,56 @@
   color: var(--accent);
 }
 
+.section-kicker {
+  font-family: $font-mono;
+  font-size: $type-xs;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.home-main {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(3rem, 7vw, 5rem);
+}
+
+.home-hero {
+  display: grid;
+  gap: 1rem;
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.home-title {
+  font-family: $font-display;
+  font-size: clamp(3.4rem, 1.9rem + 5vi, 7.5rem);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+  margin: 0;
+  max-width: 9ch;
+  text-wrap: balance;
+}
+
+.home-subtitle {
+  margin: 0;
+  max-width: 42rem;
+  font-size: clamp(1.2rem, 1.05rem + 0.35vi, 1.55rem);
+  line-height: 1.45;
+  color: var(--text-1);
+}
+
+.home-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.home-main .post-list > ul {
+  padding-top: 0;
+}
+
 .MathJax_Display,
 .MJXc-display,
 .MathJax_SVG_Display {

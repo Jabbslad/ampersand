@@ -1,17 +1,23 @@
 :root.dark {
   --bg-0: #091c1e;
-  --bg-1: #0f2a2d;
-  --bg-2: #163539;
+  --bg-1: #102427;
+  --bg-2: #153035;
   --text-0: #f6fff5;
-  --text-1: #c8d8c6;
-  --text-2: #8a9a88;
+  --text-1: #d5e0d3;
+  --text-2: #978e81;
   --accent: #f6833b;
   --accent-hover: #e07030;
-  --border-color: #1d4045;
-  --rail-color: rgba(246, 255, 245, 0.06);
+  --border-color: #7d665b;
+  --rail-color: rgba(246, 255, 245, 0.08);
   --icon-filter: invert(1);
-  --code-bg: #0f2a2d;
-  --hover-color: #091c1e;
+  --code-bg: rgba(246, 255, 245, 0.06);
+  --hover-color: rgba(246, 255, 245, 0.06);
+  --surface-0: rgba(246, 255, 245, 0.03);
+  --surface-1: rgba(246, 255, 245, 0.08);
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --glow-1: rgba(246, 131, 59, 0.14);
+  --glow-2: rgba(246, 255, 245, 0.08);
+  --tag-bg: rgba(246, 255, 245, 0.05);
 
   img.social-icon {
     filter: invert(1);
