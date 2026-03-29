@@ -16,12 +16,19 @@
   margin: 0 0 1.75rem;
 }
 
+// When a hero banner follows the nav header, hide the nav's border
+// since the hero's full-bleed top border replaces it
+header.grid-full:has(+ .hero-banner) nav {
+  border-bottom: none;
+}
+
 .hero-banner {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   height: clamp(14rem, 28vw, 24rem);
   overflow: hidden;
   position: relative;
+  border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
 
   .hero-image {
