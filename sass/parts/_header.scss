@@ -17,8 +17,9 @@
 }
 
 .hero-banner {
-  width: 100%;
-  height: clamp(12rem, 24vw, 20rem);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  height: clamp(14rem, 28vw, 24rem);
   overflow: hidden;
   position: relative;
   border-bottom: 1px solid var(--border-color);
@@ -38,7 +39,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 40%;
+    height: 50%;
     background: linear-gradient(to top, var(--bg-0), transparent);
     pointer-events: none;
   }
