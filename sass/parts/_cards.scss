@@ -1,0 +1,92 @@
+.cards {
+  column-count: var(--columns, 2);
+  column-gap: 20px;
+  padding: 12px 0;
+
+  @media (max-width: $bp-md) {
+    column-count: 1;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-1);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  break-inside: avoid;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.card-media {
+  width: 100%;
+  height: var(--media-height, 200px);
+  overflow: hidden;
+  background: var(--bg-2);
+  flex-shrink: 0;
+}
+
+.card-image,
+.card-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.card-title {
+  margin: 0;
+  font-family: $font-display;
+  font-size: $type-lg;
+  font-weight: 600;
+  line-height: 1.3;
+
+  a {
+    text-decoration: none;
+    &:hover { color: var(--accent); }
+  }
+}
+
+.card-tagline {
+  margin: 0;
+  font-size: $type-sm;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.card-links {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.card-tag {
+  font-family: $font-mono;
+  font-size: $type-xs;
+  color: var(--text-2);
+  white-space: nowrap;
+}

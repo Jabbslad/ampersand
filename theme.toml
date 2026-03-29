@@ -1,0 +1,10 @@
+name = "ampersand"
+description = "An editorial magazine-style theme for Zola with warm parchment colors, serif display headings, and a proportional grid layout."
+license = "MIT"
+min_version = "0.14.0"
+
+[author]
+name = "Jamie"
+
+[extra]
+theme = "toggle"

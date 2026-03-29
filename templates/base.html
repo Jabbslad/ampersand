@@ -1,0 +1,48 @@
+{% import "macros/macros.html" as post_macros %}
+
+<!DOCTYPE html>
+<html lang="en" class="dark light">
+
+    {% include "partials/header.html" %}
+
+    <body>
+        <div class="site-wrapper">
+            <div class="site-grid">
+                {% include "partials/grid-rails.html" %}
+
+                <header class="grid-full">
+                    {% include "partials/nav.html" %}
+                </header>
+
+                {% block hero %}
+                {% endblock hero %}
+
+                <div class="grid-content">
+                    {% block main_content %}
+                        Nothing here?!
+                    {% endblock main_content %}
+
+                    {% if page.extra.comment is defined %}
+                        {% set show_comment = page.extra.comment %}
+                    {% else %}
+                        {% set show_comment = false %}
+                    {% endif %}
+
+                    {% if show_comment %}
+                        <div class="giscus">
+                        </div>
+                        {% include "_giscus_script.html" %}
+                    {% endif %}
+                </div>
+
+                <div class="grid-sidebar">
+                    {% block right_content %}
+                    {% endblock right_content %}
+                </div>
+            </div>
+
+            {% include "partials/footer.html" %}
+        </div>
+    </body>
+
+</html>

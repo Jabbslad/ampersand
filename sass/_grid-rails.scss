@@ -1,0 +1,30 @@
+.grid-rails {
+  display: none;
+
+  @media (min-width: $bp-lg) {
+    display: contents;
+
+    .grid-rail {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      pointer-events: none;
+      z-index: 0;
+      border-left: 1px dashed var(--rail-color);
+    }
+  }
+}
+
+// Position each rail at column boundaries using the grid
+.site-grid {
+  @media (min-width: $bp-lg) {
+    // Rails are placed via JS or via fixed percentages based on the 5-col grid
+    // Column widths: 560 560 373 373 373 = 2239 total
+    // Boundaries at: 560/2239, 1120/2239, 1493/2239, 1866/2239
+    .grid-rail:nth-child(1) { left: calc(560 / 2239 * 100%); }
+    .grid-rail:nth-child(2) { left: calc(1120 / 2239 * 100%); }
+    .grid-rail:nth-child(3) { left: calc(1493 / 2239 * 100%); }
+    .grid-rail:nth-child(4) { left: calc(1866 / 2239 * 100%); }
+  }
+}

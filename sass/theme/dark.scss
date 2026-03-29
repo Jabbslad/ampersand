@@ -1,0 +1,19 @@
+:root.dark {
+  --bg-0: #091c1e;
+  --bg-1: #0f2a2d;
+  --bg-2: #163539;
+  --text-0: #f6fff5;
+  --text-1: #c8d8c6;
+  --text-2: #8a9a88;
+  --accent: #f6833b;
+  --accent-hover: #e07030;
+  --border-color: #1d4045;
+  --rail-color: rgba(246, 255, 245, 0.06);
+  --icon-filter: invert(1);
+  --code-bg: #0f2a2d;
+  --hover-color: #091c1e;
+
+  img.social-icon {
+    filter: invert(1);
+  }
+}

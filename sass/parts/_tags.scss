@@ -1,0 +1,21 @@
+.tag-list {
+  .post-header {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+
+    h1 {
+      font-size: $type-lg;
+
+      a {
+        text-decoration: none;
+        &:hover { color: var(--accent); }
+      }
+    }
+
+    small {
+      font-family: $font-mono;
+      font-size: $type-xs;
+      color: var(--text-2);
+    }
+  }
+}

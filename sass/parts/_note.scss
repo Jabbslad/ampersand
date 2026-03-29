@@ -1,0 +1,58 @@
+.note-container {
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 1.5em 0;
+  position: relative;
+  border-left: 3px solid var(--accent);
+}
+
+.note-toggle,
+.note-header {
+  color: var(--text-0);
+  background: var(--bg-1);
+  padding: 10px 25px;
+  text-align: left;
+  border: none;
+  width: 100%;
+  position: relative;
+  outline: none;
+  font-size: $type-base;
+  font-family: inherit;
+  transition: background-color 0.15s ease;
+
+  p { margin: 0; }
+  .note-center { text-align: center; padding-right: 50px; }
+  .note-icon { padding-left: 25px; }
+}
+
+.note-toggle {
+  cursor: pointer;
+
+  &::before {
+    content: "▼";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: $type-xs;
+  }
+
+  &:hover, &:focus {
+    background: var(--bg-2);
+    outline: none;
+  }
+}
+
+.note-icon::before {
+  content: "✎";
+  color: var(--accent);
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.note-content {
+  padding: 10px 20px;
+  background: var(--bg-0);
+}

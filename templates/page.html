@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% macro content(page) %}
+    <div class="visible-element-observer-root" data-selector="main article p">
+        <main>
+            <article>
+                <div class="article-header">
+                    {% if page.date %}
+                        <div class="article-date">
+                            <time>{{ page.date | date(format="%B %d, %Y") }}</time>
+                            {% if page.extra.read_time %}
+                                <span class="reading-time">{{ page.reading_time }} min read</span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <h1 class="article-title">{{ page.title }}</h1>
+
+                    {% if page.taxonomies and page.taxonomies.tags %}
+                        <div class="article-tags">
+                            {%- for tag in page.taxonomies.tags %}
+                                <a href="{{ get_taxonomy_url(kind='tags', name=tag, lang=page.lang) }}"
+                                   class="post-tag">{{ tag }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if page.taxonomies and page.taxonomies.authors %}
+                        <div class="article-authors">
+                            {%- for author in page.taxonomies.authors %}
+                                <a href="{{ get_taxonomy_url(kind='authors', name=author, lang=page.lang) }}"
+                                   class="post-authors">{{ author }}</a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if page.draft %}
+                        <span class="draft-label">DRAFT</span>
+                    {% endif %}
+                </div>
+
+                {% if page.extra.tldr %}
+                    <div class="tldr">
+                        <strong>tl;dr:</strong>
+                        {{ page.extra.tldr }}
+                    </div>
+                {% endif %}
+
+                <section class="body">
+                    {{ page.content | safe }}
+                </section>
+            </article>
+        </main>
+    </div>
+{% endmacro content %}
+
+{% block hero %}
+    {% if page.extra.hero_image %}
+        <div class="hero-banner grid-full">
+            {% if page.extra.hero_image is starting_with("http") %}
+                <img src="{{ page.extra.hero_image }}"
+                     alt="{{ page.extra.hero_image_alt | default(value=page.title) }}"
+                     class="hero-image" />
+            {% elif page.extra.hero_image is ending_with(".svg") %}
+                <img src="{{ get_url(path=page.extra.hero_image) }}"
+                     alt="{{ page.extra.hero_image_alt | default(value=page.title) }}"
+                     class="hero-image" />
+            {% else %}
+                {% set hero_path = page.extra.hero_image %}
+                {% if hero_path is not starting_with("/") %}
+                    {% set hero_path = page.path ~ page.extra.hero_image %}
+                {% endif %}
+                {% set hero = resize_image(path=hero_path, width=1440, op="fit_width", format="webp", quality=85) %}
+                <img src="{{ hero.url }}"
+                     alt="{{ page.extra.hero_image_alt | default(value=page.title) }}"
+                     class="hero-image" />
+            {% endif %}
+        </div>
+    {% endif %}
+{% endblock hero %}
+
+{% block main_content %}
+    {{ self::content(page=page) }}
+{% endblock main_content %}
+
+{% block right_content %}
+    {% if config.extra.toc | default(value=false) and page.toc %}
+        {% include "partials/toc.html" %}
+    {% endif %}
+{% endblock right_content %}

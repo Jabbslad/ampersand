@@ -1,0 +1,40 @@
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-top: auto;
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: $grid-max-width;
+    margin: 0 auto;
+    padding: 0 $grid-padding;
+
+    @media (max-width: $bp-md) {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+  }
+
+  .footer-left,
+  .footer-right {
+    font-family: $font-mono;
+    font-size: $type-xs;
+    color: var(--text-2);
+    letter-spacing: 0.02em;
+  }
+
+  a {
+    color: var(--text-2);
+    text-decoration: underline;
+    text-decoration-color: var(--border-color);
+    text-underline-offset: 2px;
+
+    &:hover {
+      color: var(--accent);
+      text-decoration-color: var(--accent);
+    }
+  }
+}

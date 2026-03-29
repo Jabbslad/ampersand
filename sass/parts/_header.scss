@@ -1,0 +1,53 @@
+.page-header {
+  font-family: $font-display;
+  font-size: $type-3xl;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 1rem 0 1.5rem;
+  color: var(--text-0);
+}
+
+.hero-banner {
+  width: 100%;
+  height: clamp(12rem, 25vw, 22rem);
+  overflow: hidden;
+  position: relative;
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+    border-radius: 0;
+    display: block;
+  }
+
+  // Soft fade at the bottom edge into the background
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, var(--bg-0), transparent);
+    pointer-events: none;
+  }
+}
+
+.not-found-header {
+  font-family: $font-display;
+  text-align: center;
+  padding: clamp(4rem, 8vw, 8rem) 0;
+
+  .page-header {
+    font-size: clamp(4rem, 3rem + 5vw, 8rem);
+    margin-bottom: 0.5rem;
+  }
+
+  span {
+    font-size: $type-lg;
+    color: var(--text-2);
+  }
+}

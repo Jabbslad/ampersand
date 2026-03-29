@@ -1,0 +1,117 @@
+.talks-grid {
+  display: grid;
+  gap: 24px;
+  padding: 12px 0;
+
+  @media (min-width: $bp-md) and (max-width: $bp-lg) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.talk-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: $bp-lg) {
+    flex-direction: row;
+  }
+
+  .talk-video {
+    position: relative;
+    flex-shrink: 0;
+    aspect-ratio: 16/9;
+
+    @media (min-width: $bp-lg) {
+      width: 360px;
+      height: 100%;
+    }
+
+    .talk-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      filter: brightness(75%) grayscale(50%);
+      border-radius: 0;
+    }
+
+    .video-play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .rounded-btn {
+        background: var(--bg-2);
+        border-radius: 50%;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .talk-info {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    .talk-title {
+      margin: 0;
+      font-family: $font-display;
+      font-size: $type-lg;
+      font-weight: 600;
+    }
+
+    .talk-description {
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-2);
+      font-size: $type-sm;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+    }
+  }
+}
+
+a.talk-video:hover {
+  background: none;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  gap: 3px;
+  background: var(--bg-2);
+  font-size: $type-xs;
+  color: var(--text-1);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  text-decoration: none;
+
+  svg, img {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+
+  img {
+    filter: var(--icon-filter);
+  }
+
+  &:hover {
+    background: var(--bg-1);
+  }
+}

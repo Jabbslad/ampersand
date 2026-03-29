@@ -1,0 +1,68 @@
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  max-width: $grid-max-width;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $grid-padding;
+  position: relative;
+  flex: 1;
+
+  @media (min-width: $bp-lg) {
+    grid-template-columns: 560fr 560fr 373fr 373fr 373fr;
+  }
+}
+
+// Grid placement utilities
+.grid-full {
+  grid-column: 1 / -1;
+}
+
+.grid-content {
+  grid-column: 1 / -1;
+
+  @media (min-width: $bp-lg) {
+    grid-column: 2 / 5;
+  }
+}
+
+.grid-wide {
+  grid-column: 1 / -1;
+
+  @media (min-width: $bp-lg) {
+    grid-column: 1 / 5;
+  }
+}
+
+.grid-sidebar {
+  display: none;
+
+  @media (min-width: $bp-xl) {
+    display: block;
+    grid-column: 5 / 6;
+  }
+}
+
+.grid-bleed {
+  grid-column: 1 / -1;
+}
+
+// Grid section spacing
+.grid-section {
+  padding-block: clamp(2rem, 4vw, 3.5rem);
+}
+
+.grid-section--dense {
+  padding-block: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.grid-section--spacious {
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+}

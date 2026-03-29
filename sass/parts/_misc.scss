@@ -1,0 +1,14 @@
+.primary-color {
+  color: var(--accent);
+}
+
+.MathJax_Display,
+.MJXc-display,
+.MathJax_SVG_Display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.visible-element-observer-root {
+  // Used by toc.js for scroll observation
+}

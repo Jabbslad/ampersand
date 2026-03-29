@@ -1,0 +1,22 @@
+// Font stacks
+$font-display: "Fraunces", "Georgia", serif;
+$font-body: "Inter", "Helvetica Neue", "Arial", sans-serif;
+$font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+// Fluid type scale
+$type-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+$type-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+$type-base: clamp(1rem,     0.9rem  + 0.5vw,  1.125rem);
+$type-lg:   clamp(1.25rem,  1rem    + 1vw,    1.5rem);
+$type-xl:   clamp(1.5rem,   1.1rem  + 1.5vw,  2rem);
+$type-2xl:  clamp(2rem,     1.5rem  + 2vw,    3rem);
+$type-3xl:  clamp(2.5rem,   1.8rem  + 3vw,    4rem);
+
+// Grid
+$grid-max-width: 1440px;
+$grid-padding: clamp(1rem, 2vw, 3rem);
+
+// Breakpoints
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;

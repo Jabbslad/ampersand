@@ -1,0 +1,117 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0;
+
+  @media (max-width: $bp-md) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .left-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .site-title {
+      font-family: $font-display;
+      font-size: $type-lg;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+
+      &:hover {
+        color: var(--accent);
+      }
+    }
+
+    .socials {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .social img {
+        width: 16px;
+        height: 16px;
+        filter: var(--icon-filter);
+      }
+    }
+  }
+
+  .right-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    .nav-link {
+      font-family: $font-mono;
+      font-size: $type-xs;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      padding: 0.25em 0.5em;
+      color: var(--text-2);
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: var(--accent);
+        background: none;
+      }
+    }
+
+    .nav-sep {
+      font-family: $font-display;
+      font-style: italic;
+      color: var(--text-2);
+      opacity: 0.4;
+      font-size: $type-sm;
+      user-select: none;
+    }
+
+    #dark-mode-toggle {
+      margin-left: 0.5rem;
+      padding: 0.25rem;
+      display: inline-flex;
+      background: none;
+      border: none;
+
+      img {
+        width: 16px;
+        height: 16px;
+        filter: var(--icon-filter);
+      }
+
+      &:hover {
+        background: none;
+      }
+    }
+  }
+}
+
+.search-button {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.25em;
+
+  img {
+    border: none;
+    width: 16px;
+    height: 16px;
+    filter: var(--icon-filter);
+  }
+
+  &:hover {
+    background: none;
+  }
+}
