@@ -325,17 +325,31 @@
     el._pretextSegments = segments;
     el._pretextLastFontSize = computedStyle.fontSize;
 
-    // Mark as enhanced — this makes DOM text transparent via CSS
-    el.classList.add("pretext-enhanced");
-
-    // Render to canvas — if it fails, revert
+    // Render canvas BEFORE making text transparent — verify it has content
     var ok = renderToCanvas(el, lines);
     if (!ok) {
-      el.classList.remove("pretext-enhanced");
       var c = el.querySelector(".pretext-canvas");
       if (c) c.remove();
       return;
     }
+
+    // Verify the canvas actually drew visible pixels
+    var canvas = el.querySelector(".pretext-canvas");
+    if (canvas) {
+      var ctx = canvas.getContext("2d");
+      var sample = ctx.getImageData(0, 0, Math.min(canvas.width, 200), Math.min(canvas.height, 50));
+      var hasContent = false;
+      for (var p = 3; p < sample.data.length; p += 4) {
+        if (sample.data[p] > 0) { hasContent = true; break; }
+      }
+      if (!hasContent) {
+        canvas.remove();
+        return;
+      }
+    }
+
+    // Canvas has content — now make DOM text transparent
+    el.classList.add("pretext-enhanced");
 
     if (resizeObserver) resizeObserver.observe(el);
   }
@@ -430,6 +444,10 @@
   // --- Entry Point ---
 
   document.addEventListener("DOMContentLoaded", async function () {
+    // Skip on narrow viewports — canvas text rendering has measurement
+    // differences on mobile browsers that cause layout mismatches
+    if (window.innerWidth < 768) return;
+
     if (typeof Pretext === "undefined" || !Pretext.prepareWithSegments) {
       console.warn("Pretext: library not loaded, skipping canvas enhancement");
       return;
