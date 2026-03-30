@@ -1,10 +1,14 @@
 name = "ampersand"
-description = "An editorial magazine-style theme for Zola with warm parchment colors, serif display headings, and a proportional grid layout."
+description = "An editorial magazine-style theme for Zola with warm parchment colours, serif display headings, and a proportional grid layout."
 license = "MIT"
 min_version = "0.14.0"
+homepage = "https://github.com/Jabbslad/ampersand"
+demo = "https://jamie.codes"
+tags = ["blog", "magazine", "dark-mode", "light-mode", "responsive", "search"]
 
 [author]
 name = "Jamie"
+homepage = "https://jamie.codes"
 
 [extra]
 theme = "toggle"
