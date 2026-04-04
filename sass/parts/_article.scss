@@ -50,6 +50,8 @@
 article {
   section.body {
     max-width: 42rem;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     font-size: clamp(1.02rem, 0.99rem + 0.12vi, 1.14rem);
     line-height: 1.45;
     color: var(--text-1);
@@ -104,6 +106,20 @@ article {
       margin: 2rem 0;
       border: 1px solid var(--border-color);
       box-shadow: 0 24px 48px -30px var(--shadow-color);
+    }
+
+    // Prevent code and tables from blowing out the layout on mobile
+    pre {
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
 }

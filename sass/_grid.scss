@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .site-grid {
@@ -27,6 +28,8 @@
 
 .grid-content {
   grid-column: 1 / -1;
+  min-width: 0;
+  overflow: hidden;
 
   @media (min-width: $bp-lg) {
     grid-column: 2 / 5;
