@@ -1,16 +1,85 @@
 .site-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border-top: 1px solid var(--border-color);
-  padding: clamp(2rem, 4vw, 3.5rem) 0;
+  padding: 32px 0 32px;
+
+  @media (min-width: $bp-md) {
+    padding: 56px 0 40px;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 80px 0 40px;
+  }
   margin-top: auto;
-  background: linear-gradient(180deg, transparent, var(--surface-0));
+  background-color: var(--ground);
+  background-image: none;
+
+  .footer-field,
+  .footer-field-fallback {
+    display: none;
+  }
+
+  @media (min-width: $bp-md) {
+    .footer-field {
+      display: block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .footer-field {
+        display: none;
+      }
+
+      .footer-field-fallback {
+        display: block;
+      }
+    }
+  }
+
+  .footer-field {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .footer-field-fallback {
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    z-index: 0;
+    margin: 0;
+    transform: translateY(-50%);
+    font-family: $font-mono;
+    font-size: 64px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: transparent;
+    background-image: radial-gradient(circle, rgba(120, 231, 114, 0.85) 1px, transparent 1.2px);
+    background-size: 4px 4px;
+    -webkit-background-clip: text;
+    background-clip: text;
+    pointer-events: none;
+    white-space: nowrap;
+  }
 
   .footer-content {
+    position: relative;
+    z-index: 10;
     display: grid;
-    gap: 1.5rem 3rem;
+    gap: 20px 32px;
     align-items: start;
     max-width: $grid-max-width;
     margin: 0 auto;
-    padding: 0 $grid-padding;
+    padding: 0 20px;
+
+    @media (min-width: $bp-md) {
+      padding: 0 40px;
+    }
 
     @media (min-width: $bp-lg) {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -28,15 +97,17 @@
   .footer-title {
     display: block;
     font-family: $font-brand;
-    font-size: clamp(1.1rem, 1rem + 0.25vi, 1.35rem);
-    font-weight: 700;
-    letter-spacing: -0.04em;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.5;
   }
 
   .footer-description {
-    margin: 0.6rem 0 0;
-    color: var(--text-2);
-    line-height: 1.5;
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    line-height: 1.43;
   }
 
   .footer-meta {
@@ -58,18 +129,57 @@
   .footer-link,
   .footer-copy {
     font-family: $font-mono;
-    font-size: $type-xs;
-    color: var(--text-2);
-    letter-spacing: 0.08em;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0;
     text-transform: uppercase;
   }
 
-  a {
-    color: var(--text-2);
+  a.footer-link {
+    color: #ffffff;
     text-decoration: none;
 
     &:hover {
-      color: var(--accent);
+      color: #ffffff;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: rgba(255, 255, 255, 0.6);
     }
   }
+}
+
+.hero-ascii,
+.ascii-burst {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-ascii {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 26%;
+}
+
+.ascii-slot .ascii-burst {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ascii-band {
+  left: 50%;
+  top: -32px;
+  width: 100vw;
+  height: 72px;
+  transform: translateX(-50%);
+}
+
+.ascii-slot .section-kicker {
+  position: relative;
+  z-index: 10;
 }

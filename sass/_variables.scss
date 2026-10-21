@@ -1,23 +1,27 @@
-// Font stacks
-$font-display: "Fraunces", "Georgia", serif;
-$font-body: "ZedTextFtl", "Inter", "Helvetica Neue", sans-serif;
-$font-brand: "ZedDisplayFtl", "ZedTextFtl", "Inter", sans-serif;
-$font-mono: "JetBrains Mono", "Fira Code", monospace;
+// Kiln / Prime Intellect type. Geist for copy, Geist Mono for labels.
+// ABC Favorit Mono is replaced by Geist Mono per the Kiln adaptation.
+$font-display: "Geist", Arial, sans-serif;
+$font-body: "Geist", Arial, sans-serif;
+$font-brand: "Geist", Arial, sans-serif;
+$font-mono: "Geist Mono", monospace;
 
-// Fluid type scale
-$type-xs: clamp(0.68rem, 0.64rem + 0.1vi, 0.84rem);
-$type-sm: clamp(0.78rem, 0.72rem + 0.15vi, 0.95rem);
-$type-base: clamp(0.938rem, 0.88rem + 0.2vi, 1.06rem);
-$type-lg: clamp(1.12rem, 0.96rem + 0.45vi, 1.5rem);
-$type-xl: clamp(1.35rem, 1.04rem + 0.75vi, 2.1rem);
-$type-2xl: clamp(1.65rem, 1.1rem + 1.3vi, 3.5rem);
-$type-3xl: clamp(2.1rem, 1.15rem + 2.4vi, 5.8rem);
+// Fixed scale from design.md (no tightened tracking, weight stays 400/500).
+$type-xs: 12px;
+$type-sm: 14px;
+$type-base: 16px;
+$type-lg: 18px;
+$type-xl: 20px;
+$type-2xl: 28px;
+$type-3xl: 36px;
 
-// Grid
-$grid-max-width: 1680px;
-$grid-padding: clamp(1rem, 3vw, 4rem);
+// Layout
+$grid-max-width: 1440px;
+$content-max: 1024px;
+$grid-padding: 20px;
+$page-margin: 16px;
 
 // Breakpoints
+$bp-sm: 640px;
 $bp-md: 768px;
 $bp-lg: 1024px;
 $bp-xl: 1280px;

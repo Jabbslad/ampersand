@@ -12,12 +12,13 @@
   max-width: $grid-max-width;
   width: 100%;
   margin: 0 auto;
-  padding: 0 $grid-padding;
+  padding: 0 $page-margin;
   position: relative;
   flex: 1;
+  box-sizing: border-box;
 
-  @media (min-width: $bp-lg) {
-    grid-template-columns: 560fr 560fr 373fr 373fr 373fr;
+  @media (min-width: $bp-md) {
+    padding: 0 $grid-padding;
   }
 }
 
@@ -30,10 +31,10 @@
   grid-column: 1 / -1;
   min-width: 0;
   overflow: hidden;
-
-  @media (min-width: $bp-lg) {
-    grid-column: 2 / 5;
-  }
+  max-width: $content-max;
+  width: 100%;
+  margin-inline: auto;
+  overflow: visible;
 }
 
 .grid-wide {
