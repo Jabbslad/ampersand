@@ -2,6 +2,7 @@
 
 {% macro content(page) %}
     <div class="visible-element-observer-root" data-selector="main article p">
+        <canvas class="ascii-burst ascii-band" aria-hidden="true"></canvas>
         <main>
             <article>
                 <div class="article-header">
@@ -57,6 +58,7 @@
 {% block hero %}
     {% if page.extra.hero_image %}
         <div class="hero-banner grid-full">
+            <canvas class="hero-ascii" aria-hidden="true"></canvas>
             {% if page.extra.hero_image is starting_with("http") %}
                 <img src="{{ page.extra.hero_image }}"
                      alt="{{ page.extra.hero_image_alt | default(value=page.title) }}"

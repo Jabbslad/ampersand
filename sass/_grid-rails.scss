@@ -2,7 +2,7 @@
   display: none;
 
   @media (min-width: $bp-lg) {
-    display: contents;
+    display: none;
 
     .grid-rail {
       position: absolute;

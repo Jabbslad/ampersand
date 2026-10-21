@@ -1,23 +1,25 @@
 :root.dark {
-  --bg-0: #091c1e;
-  --bg-1: #102427;
-  --bg-2: #153035;
-  --text-0: #f6fff5;
-  --text-1: #d5e0d3;
-  --text-2: #978e81;
-  --accent: #f6833b;
-  --accent-hover: #e07030;
-  --border-color: #7d665b;
-  --rail-color: rgba(246, 255, 245, 0.08);
+  --bg-0: #000000;
+  --bg-1: #111111;
+  --bg-2: #151515;
+  --text-0: #f4f4f4;
+  --text-1: rgba(255, 255, 255, 0.72);
+  --text-2: rgba(255, 255, 255, 0.5);
+  --accent: #ffffff;
+  --accent-hover: #e6e6e6;
+  --border-color: #202020;
+  --rail-color: transparent;
   --icon-filter: invert(1);
-  --code-bg: rgba(246, 255, 245, 0.06);
-  --hover-color: rgba(246, 255, 245, 0.06);
-  --surface-0: rgba(246, 255, 245, 0.03);
-  --surface-1: rgba(246, 255, 245, 0.08);
-  --shadow-color: rgba(0, 0, 0, 0.4);
-  --glow-1: rgba(246, 131, 59, 0.14);
-  --glow-2: rgba(246, 255, 245, 0.08);
-  --tag-bg: rgba(246, 255, 245, 0.05);
+  --code-bg: #111111;
+  --hover-color: rgba(255, 255, 255, 0.02);
+  --surface-0: rgba(255, 255, 255, 0.02);
+  --surface-1: rgba(255, 255, 255, 0.06);
+  --shadow-color: transparent;
+  --glow-1: transparent;
+  --glow-2: transparent;
+  --tag-bg: rgba(255, 255, 255, 0.06);
+  --signal: #78e772;
+  --on-primary: #000000;
 
   img.social-icon {
     filter: invert(1);

@@ -7,6 +7,7 @@
     <main class="home-main">
         {# --- Hero --- #}
         <section class="home-hero">
+            <canvas class="hero-ascii" aria-hidden="true"></canvas>
             <p class="section-kicker">{{ config.title }} // Journal</p>
             <h1 class="home-title">Writing about code, architecture &amp; the craft of software.</h1>
         </section>
@@ -45,7 +46,10 @@
         {# --- Post List (remaining) --- #}
         {% if all_posts | length > 1 %}
             <section class="home-section">
-                <p class="section-kicker">Archive</p>
+                <div class="ascii-slot">
+                    <canvas class="ascii-burst" aria-hidden="true"></canvas>
+                    <p class="section-kicker">Archive</p>
+                </div>
 
                 <div class="post-list">
                     <ul>

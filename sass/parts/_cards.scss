@@ -12,20 +12,20 @@
 .card {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, var(--surface-1), var(--surface-0));
+  background-color: transparent;
+  background-image: none;
   border: 1px solid var(--border-color);
-  border-radius: 1rem;
+  border-radius: 0;
   overflow: hidden;
-  box-shadow: 0 22px 44px -34px var(--shadow-color);
+  box-shadow: none;
   transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 28px 48px -30px var(--shadow-color);
-    border-color: var(--text-2);
+    transform: none;
+    box-shadow: none;
+    border-color: rgba(255, 255, 255, 0.28);
   }
 }
 

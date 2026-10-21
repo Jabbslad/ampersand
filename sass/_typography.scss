@@ -1,9 +1,17 @@
+// Page ground is pure black. Panels are unfilled hairlines. A solid
+// black is painted only behind text, so dots never sit under body copy.
+:root {
+  --ground: #000000;
+  --bg-0: #000000;
+}
+
 html {
-  background-color: var(--bg-0);
+  background-color: var(--ground);
   color: var(--text-0);
   font-family: $font-body;
   font-size: $type-base;
-  line-height: 1.55;
+  font-weight: 400;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -11,49 +19,53 @@ html {
 body {
   min-height: 100vh;
   position: relative;
-  background:
-    radial-gradient(circle at top right, var(--glow-1) 0, transparent 34%),
-    radial-gradient(circle at bottom left, var(--glow-2) 0, transparent 38%),
-    var(--bg-0);
+  background-color: var(--ground);
+  background-image:
+    url("images/grain.svg"),
+    radial-gradient(circle, #1a1a1a 1px, transparent 1.15px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    radial-gradient(circle at 80% 0%, rgba(125, 255, 166, 0.03), transparent 28%),
+    radial-gradient(circle at 10% 100%, rgba(73, 220, 255, 0.02), transparent 26%);
+  background-size: 180px 180px, 24px 24px, 80px 80px, 80px 80px, auto, auto;
+  background-repeat: repeat, repeat, repeat, repeat, no-repeat, no-repeat;
+}
 
-  &::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.35;
-    background-image:
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.06), transparent 20%),
-      repeating-linear-gradient(
-        90deg,
-        transparent 0,
-        transparent 120px,
-        var(--rail-color) 121px,
-        transparent 122px
-      );
-    mix-blend-mode: multiply;
-  }
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 2px;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-display;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  font-weight: 400;
+  line-height: 1.22;
+  letter-spacing: 0;
   color: var(--text-0);
   margin-top: 1.7em;
   margin-bottom: 0.5em;
 }
 
-h1 { font-size: $type-2xl; font-weight: 500; }
-h2 { font-size: $type-xl; font-weight: 500; letter-spacing: -0.03em; }
-h3 { font-size: $type-lg; font-weight: 600; }
-h4 { font-size: $type-base; font-weight: 700; }
-h5 { font-size: $type-sm;  font-weight: 700; }
-h6 { font-size: $type-xs;  font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+h1 { font-size: 40px; line-height: 1.1; }
+h2 { font-size: 28px; line-height: 1.22; }
+h3 { font-size: 20px; line-height: 1.5; }
+h4 { font-size: $type-base; }
+h5 { font-size: $type-sm; }
+h6 {
+  font-family: $font-mono;
+  font-size: 12px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
 
 p {
   margin-bottom: 1.35em;
   color: var(--text-1);
+}
+
+strong, b {
+  font-weight: 500;
 }
 
 a {
@@ -62,31 +74,31 @@ a {
 }
 
 main a {
-  color: var(--text-0);
-  text-decoration: underline;
-  text-decoration-color: var(--border-color);
-  text-underline-offset: 0.18em;
-  text-decoration-thickness: 1px;
+  color: #ffffff;
+  text-decoration: none;
 
   &:hover {
-    color: var(--text-0);
-    text-decoration-color: var(--text-2);
+    color: #ffffff;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: rgba(255, 255, 255, 0.6);
+    text-decoration-thickness: 1px;
   }
 }
 
 blockquote {
   border-left: 1px solid var(--border-color);
-  padding: 0 0 0 1.25rem;
-  margin: 2.25rem 0;
+  padding: 0 0 0 20px;
+  margin: 32px 0;
   background: none;
 
   p {
-    color: var(--text-0);
+    color: rgba(255, 255, 255, 0.9);
     font-family: $font-display;
-    font-size: clamp(1.3rem, 1.08rem + 0.85vi, 1.95rem);
+    font-size: 20px;
     font-style: normal;
-    font-weight: 300;
-    line-height: 1.2;
+    font-weight: 400;
+    line-height: 1.5;
     margin-bottom: 0;
   }
 }
@@ -98,7 +110,7 @@ hr {
 }
 
 img {
-  border-radius: 0.5rem;
+  border-radius: 0;
 }
 
 figure {
@@ -106,7 +118,7 @@ figure {
 
   img {
     border: 1px solid var(--border-color);
-    box-shadow: 0 24px 48px -30px var(--shadow-color);
+    border-radius: 0;
   }
 
   figcaption {
@@ -119,16 +131,17 @@ figure {
 
 time {
   font-family: $font-mono;
-  font-size: $type-xs;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   color: var(--text-2);
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--bg-0);
+  background: #ffffff;
+  color: #000000;
 }
 
 table {
@@ -138,7 +151,7 @@ table {
   margin: 1.5em 0;
   background: var(--surface-0);
   border: 1px solid var(--border-color);
-  border-radius: 0.75rem;
+  border-radius: 0;
   overflow: hidden;
 
   th {
@@ -180,11 +193,13 @@ summary {
 
 .draft-label {
   font-family: $font-mono;
-  font-size: $type-xs;
-  font-weight: 700;
-  color: var(--bg-0);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--on-primary);
   background: var(--accent);
-  padding: 0.2rem 0.45rem;
-  border-radius: 999px;
+  padding: 4px;
+  border-radius: 0;
   text-transform: uppercase;
+  letter-spacing: 0;
 }

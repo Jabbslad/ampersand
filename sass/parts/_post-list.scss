@@ -8,7 +8,7 @@
 .post-list .list-item,
 .tag-list .list-item {
   margin-bottom: 0;
-  padding: clamp(1.4rem, 2vw, 2rem) 0;
+  padding: 20px 0;
   border-bottom: 1px solid var(--border-color);
 
   &:first-child {
@@ -32,16 +32,17 @@
   h1 {
     margin: 0;
     font-family: $font-display;
-    font-size: clamp(1.55rem, 1.32rem + 0.5vi, 2.2rem);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1.02;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.5;
 
     a {
       text-decoration: none;
 
       &:hover {
-        color: var(--accent);
+        color: #ffffff;
+        text-decoration: none;
       }
     }
   }
@@ -52,29 +53,15 @@
   }
 
   .description {
-    font-size: $type-base;
-    color: var(--text-1);
-    margin-top: 0.35rem;
-    line-height: 1.5;
-    max-width: 40rem;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 8px;
+    line-height: 1.43;
+    max-width: 62ch;
   }
 
   .readmore {
-    font-family: $font-mono;
-    font-size: $type-xs;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-0);
-    text-decoration: none;
-    margin-top: 0.75rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-
-    &:hover {
-      color: var(--accent);
-    }
+    margin-top: 16px;
   }
 }
 
@@ -92,7 +79,8 @@
     color: var(--text-0);
     border: 1px solid var(--border-color);
     background: var(--surface-0);
-    border-radius: 999px;
+    border-radius: 0;
+    min-height: 44px;
     padding: 0.55rem 0.95rem;
 
     &:hover {
